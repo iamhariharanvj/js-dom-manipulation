@@ -1,15 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Mobile Phone</title>
+    <link rel="stylesheet" href="phone.css">
 </head>
 <body>
-    <input type="text" id="input-box" placeholder="enter number, message, or link">
-    <button onclick="call()">Call</button>
-    <button onclick="message()">Send Message</button>
-    <button onclick="browse()">Browse</button>
+    <h1>Enter Phone Information </h1>
+    
+    <section>
+        <label>Name: </label>
+        <input type="text" id="name">
+
+        <label>Brand: </label>
+        <input type="text" id="brand">
+
+        <label>Phone Number: </label>
+        <input type="number" id="phNo">
+
+        <label>Is smartphone? <input type="checkbox" id="smart"></label>
+        
+
+        <section id="cellphone">
+            <label>Has Radio?: <input type="checkbox" id="radio"></label>
+            
+        </section>
+
+        <section id="smartphone">
+ 
+            <label>Display Size (in inches): </label>
+            <input type="number" id="display">
+        
+
+            <label>Camera Px: </label>
+            <input type="number" id="camera">
+        
+        
+            <label>OS: </label>
+            <select id="os">
+                <option value="Android">Android</option>
+                <option value="iOS">iOS</option>
+            </select>
+       
+            <label>OS Version: </label>
+            <input type="number" id="version"> 
+
+            <section id="android">
+                <label>Has Nfc? <input type="checkbox" id="nfc"/></label>
+                
+            </section>
+        </section>
+
+        <br>
+        <button id="submit">Submit</button>
+
+        <section id="specs"></section>
+
+    </section>
+
+    
+    
 </body>
 <script src="phone.js"></script>
+<script>
+    const name = document.getElementById("name");
+    const brand = document.getElementById("brand");
+    const phNo = document.getElementById("phNo");
+    const smart = document.getElementById("smart");
+    const cellphone = document.getElementById("cellphone");
+    const radio = document.getElementById("radio");
+    const smartphone = document.getElementById("smartphone");
+    const display = document.getElementById("display");
+    const camera = document.getElementById("camera");
+    const os = document.getElementById("os");
+    const version = document.getElementById("version");
+    const android = document.getElementById("android");
+    const nfc = document.getElementById("nfc");
+    const submit = document.getElementById("submit");
+    const specs = document.getElementById("specs");
+
+    // UI change for Cellphone and Smartphone
+    smart.addEventListener('change', function(e){
+        if(this.checked){
+            cellphone.style.display='none';
+            smartphone.style.display='block';
+        }
+        else{
+            cellphone.style.display='block';
+            smartphone.style.display='none';
+        }
+    });
+
+
+    // UI change for Android and IOS
+    os.addEventListener('change', function(e){
+        android.style.display = this.value==='Android'?'block':'none';
+    });
+
+
+    submit.addEventListener('click', ()=>{
+
+        const functions = document.createElement("div"); 
+        const input = document.createElement("input");
+        const callBtn = document.createElement("button");
+        const smsBtn = document.createElement("button")
+
+        callBtn.textContent = "Call";
+        smsBtn.textContent = "Send SMS";
+
+        input.placeholder = "Enter parameter for the functionality (eg: phn no for call)"
+        functions.appendChild(input);
+
+        if(!smart.checked){ // Call, SMS, Radio
+
+            const phone = new CellPhone(name.value, brand.value, phNo.value, radio.checked)
+            
+            const radioBtn = document.createElement("button");
+            radioBtn.textContent = "Listen Radio";
+            
+            callBtn.onclick = ()=>phone.call(input.value)            
+            smsBtn.onclick = ()=> phone.sendSms(input.value)
+            radioBtn.onclick = ()=>phone.listenRadio(); 
+
+            functions.appendChild(callBtn);
+            functions.appendChild(smsBtn);
+            functions.appendChild(radioBtn)
+
+        } 
+        else{
+
+            const installBtn = document.createElement("button");
+            const cameraBtn = document.createElement("button");
+
+            installBtn.textContent = "Install App";
+            cameraBtn.textContent = "Take Picture";
+
+
+            if(os.value === 'Android'){ // Call, Sms, Install, Camera, NFC
+
+                const phone = new AndroidPhone(name.value, brand.value, phNo.value, display.value, camera.value, version.value, nfc.checked);
+
+                const nfcBtn = document.createElement("button");
+                nfcBtn.textContent = "Use NFC";
+                
+                callBtn.onclick = ()=>phone.call(input.value)            
+                smsBtn.onclick = ()=> phone.sendSms(input.value)
+                installBtn.onclick = () => phone.installApp(input.value);
+                cameraBtn.onclick = () => phone.takePicture();
+                nfcBtn.onclick = () => phone.useNFC();
+
+                functions.appendChild(callBtn);
+                functions.appendChild(smsBtn);
+                functions.appendChild(installBtn);
+                functions.appendChild(cameraBtn);
+                functions.appendChild(nfcBtn);
+            } 
+            else if(os.value === 'iOS') { // Call Sms, Install, Camera, Siri
+                const phone = new iOSPhone(name.value, brand.value, phNo.value, display.value, camera.value, version.value);
+
+                const siriBtn = document.createElement("button");
+                siriBtn.textContent = "Use Siri";
+
+                callBtn.onclick = ()=>phone.call(input.value)            
+                smsBtn.onclick = ()=> phone.sendSms(input.value)
+                installBtn.onclick = () => phone.installApp(input.value);
+                cameraBtn.onclick = () => phone.takePicture();
+                siriBtn.onclick = () => phone.useSiri();
+   
+                functions.appendChild(callBtn);
+                functions.appendChild(smsBtn);
+                functions.appendChild(installBtn);
+                functions.appendChild(cameraBtn);
+                functions.appendChild(siriBtn);
+            }
+        }
+
+        specs.innerHTML = "";
+        specs.appendChild(functions);
+        
+    });
+
+</script>
 </html>
