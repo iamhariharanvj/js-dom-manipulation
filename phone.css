@@ -5,12 +5,12 @@ body {
     padding: 20px;
 }
 
-h1 {
+h2 {
     color: #333;
     text-align: center;
 }
 
-section {
+div {
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
@@ -47,17 +47,4 @@ button {
 
 button:hover {
     background-color: #0056b3;
-}
-
-#smartphone {
-    display: none;
-}
-
-#specs div{
-    display: flex;
-    gap: 1rem;
-}
-
-#specs input{
-    flex: 1
 }

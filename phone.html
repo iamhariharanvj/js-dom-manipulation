@@ -1,183 +1,184 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Mobile Phone</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phone Management</title>
     <link rel="stylesheet" href="phone.css">
+    <style>
+        
+    </style>
 </head>
 <body>
-    <h1>Enter Phone Information </h1>
-    
-    <section>
-        <label>Name: </label>
-        <input type="text" id="name">
 
-        <label>Brand: </label>
-        <input type="text" id="brand">
+<h1>Phone Management System</h1>
 
-        <label>Phone Number: </label>
-        <input type="number" id="phNo">
+<div class="phone-form">
+    <h2>Create Phone</h2>
+    <label for="name">Name:</label>
+    <input type="text" id="name" required>
+    <br>
+    <label for="brand">Brand:</label>
+    <input type="text" id="brand" required>
+    <br>
+    <label for="number">Phone Number:</label>
+    <input type="text" id="number" required>
+    <br>
+    <label for="type">Type:</label>
+    <select id="type">
+        <option value="basic">Basic Phone</option>
+        <option value="dual">Dual SIM Phone</option>
+        <option value="android">Android Phone</option>
+        <option value="ios">iOS Phone</option>
+    </select>
+    <br>
+    <div id="extra-fields"></div>
+    <button id="create-phone">Create Phone</button>
+</div>
 
-        <label>Is smartphone? <input type="checkbox" id="smart"></label>
-        
+<div class="phone-actions" id="phone-actions" style="display:none;">
+    <h2>Phone Actions</h2>
+    <label for="action-number">Call/SMS Number:</label>
+    <input type="text" id="action-number" required>
+    <br>
+    <label for="action-message">Message:</label>
+    <input type="text" id="action-message">
+    <br>
+    <label for="sim">Select SIM:</label>
+    <select id="sim">
+        <option value="2">SIM 2</option>
+        <option value="1">SIM 1</option>
+    </select>
+    <br>
+    <button id="call-phone">Call</button>
+    <button id="sms-phone">Send SMS</button>
+    <div id="smart-actions" style="display:none;">
+        <button id="install-app">Install App</button>
+        <button id="take-picture">Take Picture</button>
+    </div>
+    <div id="android-actions" style="display:none;">
+        <button id="use-nfc">Use NFC</button>
+    </div>
+    <div id="ios-actions" style="display:none;">
+        <button id="use-siri">Use Siri</button>
+    </div>
+    <div id="radio-actions" style="display:none;">
+        <button id="listen-radio">Listen to Radio</button>
+    </div>
+</div>
 
-        <section id="cellphone">
-            <label>Has Radio?: <input type="checkbox" id="radio"></label>
-            
-        </section>
-
-        <section id="smartphone">
- 
-            <label>Display Size (in inches): </label>
-            <input type="number" id="display">
-        
-
-            <label>Camera Px: </label>
-            <input type="number" id="camera">
-        
-        
-            <label>OS: </label>
-            <select id="os">
-                <option value="Android">Android</option>
-                <option value="iOS">iOS</option>
-            </select>
-       
-            <label>OS Version: </label>
-            <input type="number" id="version"> 
-
-            <section id="android">
-                <label>Has Nfc? <input type="checkbox" id="nfc"/></label>
-                
-            </section>
-        </section>
-
-        <br>
-        <button id="submit">Submit</button>
-
-        <section id="specs"></section>
-
-    </section>
-
-    
-    
-</body>
-<script src="es6/phone.js"></script>
+<script src="phone.js"></script>
 <script>
-    const name = document.getElementById("name");
-    const brand = document.getElementById("brand");
-    const phNo = document.getElementById("phNo");
-    const smart = document.getElementById("smart");
-    const cellphone = document.getElementById("cellphone");
-    const radio = document.getElementById("radio");
-    const smartphone = document.getElementById("smartphone");
-    const display = document.getElementById("display");
-    const camera = document.getElementById("camera");
-    const os = document.getElementById("os");
-    const version = document.getElementById("version");
-    const android = document.getElementById("android");
-    const nfc = document.getElementById("nfc");
-    const submit = document.getElementById("submit");
-    const specs = document.getElementById("specs");
+    let currentPhone = null;
+    const extraFields = document.getElementById('extra-fields');
+    extraFields.innerHTML = '<label for="has-radio">Has Radio:</label><input type="checkbox" id="has-radio">';
 
-    // UI change for Cellphone and Smartphone
-    smart.addEventListener('change', function(e){
-        if(this.checked){
-            cellphone.style.display='none';
-            smartphone.style.display='block';
-        }
-        else{
-            cellphone.style.display='block';
-            smartphone.style.display='none';
+
+    document.getElementById('type').addEventListener('change', function() {
+        const type = this.value;
+        const extraFields = document.getElementById('extra-fields');
+        extraFields.innerHTML = '';
+
+        if (type === 'dual') {
+            extraFields.innerHTML = '<label for="has-radio">Has Radio:</label><input type="checkbox" id="has-radio"><label for="secondary-number">Secondary Number:</label><input type="text" id="secondary-number" required>';
+        } else if (type === 'android') {
+            extraFields.innerHTML = '<label for="display">Display:</label><input type="text" id="display" required><label for="android-cam-sensor">Camera Sensor Size:</label><input type="number" id="android-cam-sensor" required><br><label for="android-os">OS Version:</label><input type="text" id="android-os" required><br><label for="android-nfc">Has NFC:</label><input type="checkbox" id="android-nfc">';
+        } else if (type === 'ios') {
+            extraFields.innerHTML = '<label for="display">Display:</label><input type="text" id="display" required><label for="ios-cam-sensor">Camera Sensor Size:</label><input type="number" id="ios-cam-sensor" required><br><label for="ios-version">iOS Version:</label><input type="text" id="ios-version" required>';
+        } else if (type === 'basic') {
+            extraFields.innerHTML = '<label for="has-radio">Has Radio:</label><input type="checkbox" id="has-radio">';
         }
     });
 
+    document.getElementById('create-phone').addEventListener('click', function() {
+        const name = document.getElementById('name').value;
+        const brand = document.getElementById('brand').value;
+        const phoneNumber = document.getElementById('number').value;
+        const type = document.getElementById('type').value;
+        const radioActions = document.getElementById("radio-actions");
+        const androidActions = document.getElementById("android-actions");
+        const iosActions = document.getElementById("ios-actions");
 
-    // UI change for Android and IOS
-    os.addEventListener('change', function(e){
-        android.style.display = this.value==='Android'?'block':'none';
-    });
+        radioActions.style.display = 'none';
+        androidActions.style.display = 'none';
+        iosActions.style.display = 'none';
 
-
-    submit.addEventListener('click', ()=>{
-
-        const functions = document.createElement("div"); 
-        const input = document.createElement("input");
-        const callBtn = document.createElement("button");
-        const smsBtn = document.createElement("button")
-
-        callBtn.textContent = "Call";
-        smsBtn.textContent = "Send SMS";
-
-        input.placeholder = "Enter parameter for the functionality (eg: phn no for call)"
-        functions.appendChild(input);
-
-        if(!smart.checked){ // Call, SMS, Radio
-
-            const phone = new CellPhone(name.value, brand.value, phNo.value, radio.checked)
-            
-            const radioBtn = document.createElement("button");
-            radioBtn.textContent = "Listen Radio";
-            
-            callBtn.onclick = ()=>phone.call(input.value)            
-            smsBtn.onclick = ()=> phone.sendSms(input.value)
-            radioBtn.onclick = ()=>phone.listenRadio(); 
-
-            functions.appendChild(callBtn);
-            functions.appendChild(smsBtn);
-            functions.appendChild(radioBtn)
-
-        } 
-        else{
-
-            const installBtn = document.createElement("button");
-            const cameraBtn = document.createElement("button");
-
-            installBtn.textContent = "Install App";
-            cameraBtn.textContent = "Take Picture";
-
-
-            if(os.value === 'Android'){ // Call, Sms, Install, Camera, NFC
-
-                const phone = new AndroidPhone(name.value, brand.value, phNo.value, display.value, camera.value, version.value, nfc.checked);
-
-                const nfcBtn = document.createElement("button");
-                nfcBtn.textContent = "Use NFC";
-                
-                callBtn.onclick = ()=>phone.call(input.value)            
-                smsBtn.onclick = ()=> phone.sendSms(input.value)
-                installBtn.onclick = () => phone.installApp(input.value);
-                cameraBtn.onclick = () => phone.takePicture();
-                nfcBtn.onclick = () => phone.useNFC();
-
-                functions.appendChild(callBtn);
-                functions.appendChild(smsBtn);
-                functions.appendChild(installBtn);
-                functions.appendChild(cameraBtn);
-                functions.appendChild(nfcBtn);
-            } 
-            else if(os.value === 'iOS') { // Call Sms, Install, Camera, Siri
-                const phone = new iOSPhone(name.value, brand.value, phNo.value, display.value, camera.value, version.value);
-
-                const siriBtn = document.createElement("button");
-                siriBtn.textContent = "Use Siri";
-
-                callBtn.onclick = ()=>phone.call(input.value)            
-                smsBtn.onclick = ()=> phone.sendSms(input.value)
-                installBtn.onclick = () => phone.installApp(input.value);
-                cameraBtn.onclick = () => phone.takePicture();
-                siriBtn.onclick = () => phone.useSiri();
-   
-                functions.appendChild(callBtn);
-                functions.appendChild(smsBtn);
-                functions.appendChild(installBtn);
-                functions.appendChild(cameraBtn);
-                functions.appendChild(siriBtn);
-            }
+        if (type === 'basic') {
+            const hasRadio = false || document.getElementById('has-radio').checked;
+            currentPhone = new BasicPhone(name, brand, phoneNumber, hasRadio);
+            radioActions.style.display = 'block';
+        } else if (type === 'dual') {
+            const secondaryNumber = document.getElementById('secondary-number').value;
+            const hasRadio = false || document.getElementById('has-radio').checked;
+            currentPhone = new DualSimPhone(name, brand, phoneNumber, hasRadio, secondaryNumber);
+            const radioActions = document.getElementById("radio-actions");
+        } else if (type === 'android') {
+            const camSensorSize = document.getElementById('android-cam-sensor').value;
+            const display = document.getElementById('display').value;
+            const osVersion = document.getElementById('android-os').value;
+            const hasNFC = document.getElementById('android-nfc').checked;
+            currentPhone = new AndroidPhone(name, brand, phoneNumber, display, camSensorSize, osVersion, hasNFC);
+            androidActions.style.display = 'block';
+        } else if (type === 'ios') {
+            const camSensorSize = document.getElementById('ios-cam-sensor').value;
+            const display = document.getElementById('display').value;
+            const iosVersion = document.getElementById('ios-version').value;
+            currentPhone = new iOSPhone(name, brand, phoneNumber, display, camSensorSize, iosVersion);
+            iosActions.style.display = 'block';
         }
 
-        specs.innerHTML = "";
-        specs.appendChild(functions);
-        
+        document.getElementById('phone-actions').style.display = 'block';
+        document.getElementById('extra-fields').innerHTML = '';
     });
 
+    document.getElementById('call-phone').addEventListener('click', function() {
+        const number = document.getElementById('action-number').value;
+        const sim = parseInt(document.getElementById('sim').value);
+        if (currentPhone) {
+            currentPhone.call(number, sim);
+        }
+    });
+
+    document.getElementById('sms-phone').addEventListener('click', function() {
+        const message = document.getElementById('action-message').value;
+        const sim = parseInt(document.getElementById('sim').value);
+        if (currentPhone) {
+            console.log(message, sim);
+            currentPhone.sendSms(message, sim);
+        }
+    });
+
+    document.getElementById('install-app').addEventListener('click', function() {
+        const appName = prompt("Enter the app name:");
+        if (currentPhone) {
+            currentPhone.installApp(appName);
+        }
+    });
+
+    document.getElementById('take-picture').addEventListener('click', function() {
+        if (currentPhone) {
+            currentPhone.takePicture();
+        }
+    });
+
+    document.getElementById('use-nfc').addEventListener('click', function() {
+        if (currentPhone) {
+            currentPhone.useNFC();
+        }
+    });
+
+    document.getElementById('use-siri').addEventListener('click', function() {
+        if (currentPhone) {
+            currentPhone.useSiri();
+        }
+    });
+
+    document.getElementById('listen-radio').addEventListener('click', function() {
+        if (currentPhone) {
+            currentPhone.listenRadio();
+        }
+    });
 </script>
+
+</body>
 </html>
