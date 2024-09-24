@@ -96,11 +96,13 @@
         const phoneNumber = document.getElementById('number').value;
         const type = document.getElementById('type').value;
         const radioActions = document.getElementById("radio-actions");
+        const smartActions = document.getElementById("smart-actions");
         const androidActions = document.getElementById("android-actions");
         const iosActions = document.getElementById("ios-actions");
 
         radioActions.style.display = 'none';
         androidActions.style.display = 'none';
+        smartActions.style.display = 'none';
         iosActions.style.display = 'none';
 
         if (type === 'basic') {
@@ -118,12 +120,14 @@
             const osVersion = document.getElementById('android-os').value;
             const hasNFC = document.getElementById('android-nfc').checked;
             currentPhone = new AndroidPhone(name, brand, phoneNumber, display, camSensorSize, osVersion, hasNFC);
+            smartActions.style.display = 'block';
             androidActions.style.display = 'block';
         } else if (type === 'ios') {
             const camSensorSize = document.getElementById('ios-cam-sensor').value;
             const display = document.getElementById('display').value;
             const iosVersion = document.getElementById('ios-version').value;
             currentPhone = new iOSPhone(name, brand, phoneNumber, display, camSensorSize, iosVersion);
+            smartActions.style.display = 'block';
             iosActions.style.display = 'block';
         }
 
