@@ -4,41 +4,75 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JS</title>
-    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
-<body>
-    <section id="t1" class="task">
+<body class="bg-dark">
+    <section id="t1" class="container-fluid row p-5 bg-dark text-white">
         <h1>Task 1: Mirror Text into div as it is typed</h1>
-        <textarea rows="8" cols="50" id="input-box"></textarea>
-        <p>Mirrored Content</p>
-        <div id="mirror">
+        <div class="col">
+            <p class="h2">Enter your text</p>
+            <textarea class="rounded form-control" rows="5" id="input-box"></textarea>
+        </div>
+        <div class="jumbotron col">
+            <p class="h2">Mirrored Content</p>
+            <div id="mirror" class="mark w-full overflow"></div>
         </div>
     </section>
     
-    <section id="t3" class="task">
-        <h1>Task 3: Farenheit to Celcius</h1>
-        <input type="number" placeholder="0" id="farenheit"> <span><strong>° Farenheit</strong> is equal to </span>
-        <input type="number" placeholder="0" id="celcius"> <span><strong>° Celcius</strong></span>
-    </section>
+    
+    <div class="container-fluid row p-0">
+        <section id="t3" class="card p-5 border col-sm-4 bg-light rounded-0">
+            <h1 class="card-title">Task 3: Farenheit to Celcius</h1>
+            <input type="number" placeholder="0" id="farenheit"> <span><strong>° Farenheit</strong> is equal to </span>
+            <input type="number" placeholder="0" id="celcius"> <span><strong>° Celcius</strong></span>
+        </section>
 
-    <section id="t4" class="task">
-        <h1>Task 4: Password Visibility</h1>
-        <input type="password" name="password" id="password">
-        <button id="view-password">Toggle Password View</button>
-    </section>
+        <section id="t4" class="card p-5 border col-sm-4 bg-light rounded-0">
+            <h1 class="card-title">Task 4: Password Visibility</h1>
+            <input type="password" name="password" id="password">
+            <button id="view-password" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#demo"  aria-expanded="false" aria-controls="demo">Toggle Password View</button>
+            <p id="demo" class="collapse text-danger">Warning: password can be seen now</p>
+        </section>
 
-    <section id="t5" class="task">
-        <h1>Task 5: No of Characters Typed</h1>
-        <p>No of characters typed: <span id="count-chars"></span> characters</p>
-    </section>
+        <section id="t5" class="card p-5 col-sm-4 bg-light rounded-0">
+            <h1 class="card-title">Task 5: No of Characters Typed</h1>
+            <p>No of characters typed: <span id="count-chars" class="badge bg-danger"></span> characters</p>
+        </section>
+    </div>
 
-    <section id="t2" class="task">
-        <h2>Task 2: Getting data from API</h2>
-        <div id="posts">
-            Loading...
+
+    <section id="t2" class="container-fluid bg-dark text-white p-0">
+        <div class="p-5">
+            <h2>Task 2: Getting data from API</h2>
+            <table class="table table-hover table-striped border border-3 rounded">
+                <thead>
+                    <tr class="table-warning">
+                        <th >ID</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody id="posts">
+                    <tr>
+                        <td colspan="3">Nothing to show</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </section>
 
-</body>
-<script src="script.js"></script>
+    <ul class="pagination bg-dark container-fluid d-flex justify-content-center">
+        <li class="page-item"><a class="page-link" href="#t1">1</a></li>
+        <li class="page-item active"><a class="page-link" href="#t2">2</a></li>
+        <li class="page-item"><a class="page-link" href="#t3">3</a></li>
+        <li class="page-item"><a class="page-link" href="#t4">4</a></li>
+        <li class="page-item"><a class="page-link" href="#t5">5</a></li>
+        <li class="page-item"><a class="page-link" href="phone.html">6</a></li>
+      </ul>
+
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script src="script.js"></script>
+  </body>
 </html>

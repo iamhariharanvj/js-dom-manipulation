@@ -25,13 +25,17 @@ const updateUI = (data) => {
     posts.innerHTML = "";
 
     for(let post of data){
-        const container = document.createElement("div");
-        const title = document.createElement("h3");
-        const content = document.createElement("p");
+        const container = document.createElement("tr");
+        const id = document.createElement("td");
+        const title = document.createElement("td");
+        const content = document.createElement("td");
 
-        title.textContent = `Post #${post.id}: ${post.title}`
+
+        id.textContent = post.id;
+        title.textContent = post.title;
         content.textContent = post.body;
         
+        container.appendChild(id);
         container.appendChild(title);
         container.appendChild(content);
         posts.appendChild(container);

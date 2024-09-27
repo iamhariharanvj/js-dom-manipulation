@@ -4,28 +4,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Phone Management</title>
-    <link rel="stylesheet" href="phone.css">
-    <style>
-        
-    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>  
 </head>
-<body>
+<body class="container-fluid">
 
-<h1>Phone Management System</h1>
+    <div class="phone-actions modal fade" id="phone-actions">
+        <div class="modal-dialog modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Phone Actions</h2>
+                <button class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <label class="form-label" for="action-number">Call/SMS Number:</label>
+                <input class="form-control" type="text" id="action-number" required>
+                <br>
+                <label class="form-label" for="action-message">Message:</label>
+                <input class="form-control" type="text" id="action-message">
+                <br>
+                <label class="form-label" for="sim">Select SIM:</label>
+                <select id="sim" class="form-select">
+                    <option value="2">SIM 2</option>
+                    <option value="1">SIM 1</option>
+                </select>
+                <br>
+                <button class="btn btn-primary" id="call-phone">Call</button>
+                <button class="btn btn-primary" id="sms-phone">Send SMS</button>
+                <div id="smart-actions" style="display:none;">
+                    <button class="btn btn-primary" id="install-app">Install App</button>
+                    <button class="btn btn-primary" id="take-picture">Take Picture</button>
+                </div>
+                <div id="android-actions" style="display:none;">
+                    <button class="btn btn-primary" id="use-nfc">Use NFC</button>
+                </div>
+                <div id="ios-actions" style="display:none;">
+                    <button class="btn btn-primary" id="use-siri">Use Siri</button>
+                </div>
+                <div id="radio-actions" style="display:none;">
+                    <button class="btn btn-primary" id="listen-radio">Listen to Radio</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<div class="phone-form">
-    <h2>Create Phone</h2>
-    <label for="name">Name:</label>
-    <input type="text" id="name" required>
+<div class="phone-form border rounded bg-light container mt-3 p-5">
+    <h2 class="h1 text-center">Create your Phone!</h2>
+    <label class="form-label" for="name">Name:</label>
+    <input class="form-control" type="text" id="name" required>
     <br>
-    <label for="brand">Brand:</label>
-    <input type="text" id="brand" required>
+    <label class="form-label" for="brand">Brand:</label>
+    <input class="form-control" type="text" id="brand" required>
     <br>
-    <label for="number">Phone Number:</label>
-    <input type="text" id="number" required>
+    <label class="form-label" for="number">Phone Number:</label>
+    <input class="form-control" type="text" id="number" required>
     <br>
-    <label for="type">Type:</label>
-    <select id="type">
+    <label class="form-label" for="type">Type:</label>
+    <select id="type" class="form-select">
         <option value="basic">Basic Phone</option>
         <option value="dual">Dual SIM Phone</option>
         <option value="android">Android Phone</option>
@@ -33,45 +67,15 @@
     </select>
     <br>
     <div id="extra-fields"></div>
-    <button id="create-phone">Create Phone</button>
+    <button class="btn btn-primary" id="create-phone" data-bs-toggle="modal" data-bs-target="#phone-actions">Create Phone</button>
 </div>
 
-<div class="phone-actions" id="phone-actions" style="display:none;">
-    <h2>Phone Actions</h2>
-    <label for="action-number">Call/SMS Number:</label>
-    <input type="text" id="action-number" required>
-    <br>
-    <label for="action-message">Message:</label>
-    <input type="text" id="action-message">
-    <br>
-    <label for="sim">Select SIM:</label>
-    <select id="sim">
-        <option value="2">SIM 2</option>
-        <option value="1">SIM 1</option>
-    </select>
-    <br>
-    <button id="call-phone">Call</button>
-    <button id="sms-phone">Send SMS</button>
-    <div id="smart-actions" style="display:none;">
-        <button id="install-app">Install App</button>
-        <button id="take-picture">Take Picture</button>
-    </div>
-    <div id="android-actions" style="display:none;">
-        <button id="use-nfc">Use NFC</button>
-    </div>
-    <div id="ios-actions" style="display:none;">
-        <button id="use-siri">Use Siri</button>
-    </div>
-    <div id="radio-actions" style="display:none;">
-        <button id="listen-radio">Listen to Radio</button>
-    </div>
-</div>
 
 <script src="phone.js"></script>
 <script>
     let currentPhone = null;
     const extraFields = document.getElementById('extra-fields');
-    extraFields.innerHTML = '<label for="has-radio">Has Radio:</label><input type="checkbox" id="has-radio">';
+    extraFields.innerHTML = '<div class="form-check"><label class="form-check-label" for="has-radio">Has Radio:</label><input class="form-check-input" type="checkbox" id="has-radio"></div><br>';
 
 
     document.getElementById('type').addEventListener('change', function() {
@@ -80,13 +84,12 @@
         extraFields.innerHTML = '';
 
         if (type === 'dual') {
-            extraFields.innerHTML = '<label for="has-radio">Has Radio:</label><input type="checkbox" id="has-radio"><label for="secondary-number">Secondary Number:</label><input type="text" id="secondary-number" required>';
+            extraFields.innerHTML = '<div class="form-check"><label class="form-check-label" for="has-radio">Has Radio:</label><input class="form-check-input" type="checkbox" id="has-radio"></div><br><label class="form-label" for="secondary-number">Secondary Number:</label><input class="form-control" type="text" id="secondary-number" required><br>';
         } else if (type === 'android') {
-            extraFields.innerHTML = '<label for="display">Display:</label><input type="text" id="display" required><label for="android-cam-sensor">Camera Sensor Size:</label><input type="number" id="android-cam-sensor" required><br><label for="android-os">OS Version:</label><input type="text" id="android-os" required><br><label for="android-nfc">Has NFC:</label><input type="checkbox" id="android-nfc">';
         } else if (type === 'ios') {
-            extraFields.innerHTML = '<label for="display">Display:</label><input type="text" id="display" required><label for="ios-cam-sensor">Camera Sensor Size:</label><input type="number" id="ios-cam-sensor" required><br><label for="ios-version">iOS Version:</label><input type="text" id="ios-version" required>';
+            extraFields.innerHTML = '<label class="form-label" for="display">Display:</label><input class="form-control" type="text" id="display" required><br><label class="form-label" for="ios-cam-sensor">Camera Sensor Size:</label><input type="number" class="form-control" id="ios-cam-sensor" required><br><label class="form-label" for="ios-version">iOS Version:</label><input type="text" class="form-control" id="ios-version" required><br>';
         } else if (type === 'basic') {
-            extraFields.innerHTML = '<label for="has-radio">Has Radio:</label><input type="checkbox" id="has-radio">';
+            extraFields.innerHTML = '<div class="form-check"><label class="form-check-label" for="has-radio">Has Radio:</label><input class="form-check-input" type="checkbox" id="has-radio"></div><br>';
         }
     });
 
@@ -108,7 +111,7 @@
         if (type === 'basic') {
             const hasRadio = false || document.getElementById('has-radio').checked;
             currentPhone = new BasicPhone(name, brand, phoneNumber, hasRadio);
-            radioActions.style.display = 'block';
+            radioActions.style.display = 'inline';
         } else if (type === 'dual') {
             const secondaryNumber = document.getElementById('secondary-number').value;
             const hasRadio = false || document.getElementById('has-radio').checked;
@@ -120,15 +123,15 @@
             const osVersion = document.getElementById('android-os').value;
             const hasNFC = document.getElementById('android-nfc').checked;
             currentPhone = new AndroidPhone(name, brand, phoneNumber, display, camSensorSize, osVersion, hasNFC);
-            smartActions.style.display = 'block';
-            androidActions.style.display = 'block';
+            smartActions.style.display = 'inline';
+            androidActions.style.display = 'inline';
         } else if (type === 'ios') {
             const camSensorSize = document.getElementById('ios-cam-sensor').value;
             const display = document.getElementById('display').value;
             const iosVersion = document.getElementById('ios-version').value;
             currentPhone = new iOSPhone(name, brand, phoneNumber, display, camSensorSize, iosVersion);
-            smartActions.style.display = 'block';
-            iosActions.style.display = 'block';
+            smartActions.style.display = 'inline';
+            iosActions.style.display = 'inline';
         }
 
         document.getElementById('phone-actions').style.display = 'block';
@@ -183,6 +186,5 @@
         }
     });
 </script>
-
 </body>
 </html>
