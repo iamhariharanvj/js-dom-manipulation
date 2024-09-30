@@ -81,7 +81,7 @@ SmartPhone.prototype.takePicture = function(){
 };
 
 function AndroidPhone (name, brand, phoneNumber, display, camSensorSize, osVersion, hasNFC) {
-    SmartPhone.call(this, name, brand, phoneNumber, display, camSensorSize);
+    SmartPhone.call(this, name, brand, phoneNumber, camSensorSize, display);
     this.osVersion = osVersion;  
     this.hasNFC = hasNFC;  
 
@@ -99,7 +99,7 @@ AndroidPhone.prototype.useNFC = function() {
 };
 
 function iOSPhone(name, brand, phoneNumber, display, camSensorSize, iosVersion) {
-    SmartPhone.call(this, name, brand, phoneNumber, display, camSensorSize);
+    SmartPhone.call(this, name, brand, phoneNumber, camSensorSize, display);
     this.iosVersion = iosVersion;  
 
 };

@@ -12,30 +12,29 @@
         <h2>Task 1: Mirror Text into div as it is typed</h2>
         <div class="col">
             <p class="h2">Enter your text</p>
-            <textarea class="rounded-0 form-control" rows="5" id="input-box"></textarea>
+            <textarea class="rounded-0 form-control" rows="10" id="input-box"></textarea>
         </div>
-        <div class="jumbotron col">
+        <div class="col d-flex flex-column">
             <p class="h2">Mirrored Content</p>
-            <div id="mirror" class="mark"></div>
+            <div id="mirror" class="mark flex-fill"></div>
         </div>
     </section>
     
-    
     <div class="container-fluid row p-0">
-        <section id="t3" class="card p-5 border col-sm-4 bg-light rounded-0">
+        <section id="t3" class="col-sm-4 card p-5  d-flex flex-column border rounded-0 bg-light">
             <h1 class="card-title">Task 3: Farenheit to Celcius</h1>
             <div class="input-group">
                 <input type="number" class="form-control" placeholder="0" id="farenheit"> 
                 <span class="input-group-text"><strong>° Farenheit</strong></span> 
             </div>
-            <span class="text-center">↕</span>
+            <span class="text-center m-auto">↕</span>
             <div class="input-group">
                 <input type="number" class="form-control" placeholder="0" id="celcius"> 
                 <span class="input-group-text"><strong>° Celcius</strong></span>
             </div>
         </section>
 
-        <section id="t4" class="card p-5 border col-sm-4 bg-light rounded-0">
+        <section id="t4" class="col-sm-4 card p-5 border rounded-0 bg-light">
             <h1 class="card-title">Task 4: Password Visibility</h1>
             <div class="input-group">
                 <input type="password" class="form-control" name="password" id="password">
@@ -44,7 +43,7 @@
             <p id="demo" class="collapse text-danger">Warning: password can be seen now</p>
         </section>
 
-        <section id="t5" class="card p-5 col-sm-4 bg-light rounded-0">
+        <section id="t5" class="card p-5 col-sm-4 border rounded-0 bg-light">
             <h1 class="card-title">Task 5: No of Characters Typed</h1>
             <p>No of characters typed: <span id="count-chars" class="badge bg-danger"></span> characters</p>
         </section>

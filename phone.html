@@ -95,8 +95,9 @@
         if (type === 'dual') {
             extraFields.innerHTML = '<div class="form-check"><label class="form-check-label" for="has-radio">Has Radio:</label><input class="form-check-input" type="checkbox" id="has-radio"></div><br><label class="form-label" for="secondary-number">Secondary Number:</label><input class="form-control" type="text" id="secondary-number" required><br>';
         } else if (type === 'android') {
+            extraFields.innerHTML = '<label class="form-label" for="display">Display:</label><input class="form-control" type="text" id="display" required><br><label class="form-label" for="android-cam-sensor">Camera Sensor Size:</label><input type="number" class="form-control" id="android-cam-sensor" required /><br><label class="form-label" for="android-os">OS Version:</label><input type="text" class="form-control" id="android-os" required><br><div class="form-check"><label class="form-check-label" for="android-nfc">Has NFC:</label><input class="form-check-input" type="checkbox" id="android-nfc"></div><br>';
         } else if (type === 'ios') {
-            extraFields.innerHTML = '<label class="form-label" for="display">Display:</label><input class="form-control" type="text" id="display" required><br><label class="form-label" for="ios-cam-sensor">Camera Sensor Size:</label><input type="number" class="form-control" id="ios-cam-sensor" required><br><label class="form-label" for="ios-version">iOS Version:</label><input type="text" class="form-control" id="ios-version" required><br>';
+            extraFields.innerHTML = '<label class="form-label" for="display">Display:</label><input class="form-control" type="text" id="display" required><br><label class="form-label" for="ios-cam-sensor">Camera Sensor Size:</label><input type="number" class="form-control" id="ios-cam-sensor" required /><br><label class="form-label" for="ios-version">iOS Version:</label><input type="text" class="form-control" id="ios-version" required><br>';
         } else if (type === 'basic') {
             extraFields.innerHTML = '<div class="form-check"><label class="form-check-label" for="has-radio">Has Radio:</label><input class="form-check-input" type="checkbox" id="has-radio"></div><br>';
         }
@@ -127,6 +128,7 @@
             currentPhone = new DualSimPhone(name, brand, phoneNumber, hasRadio, secondaryNumber);
             const radioActions = document.getElementById("radio-actions");
         } else if (type === 'android') {
+           
             const camSensorSize = document.getElementById('android-cam-sensor').value;
             const display = document.getElementById('display').value;
             const osVersion = document.getElementById('android-os').value;
